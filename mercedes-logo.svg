@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <!-- Outer Ring -->
+    <circle cx="100" cy="100" r="90" fill="none" stroke="#C0C0C0" stroke-width="8"/>
+    
+    <!-- Inner Ring -->
+    <circle cx="100" cy="100" r="70" fill="none" stroke="#C0C0C0" stroke-width="4" stroke-dasharray="10 5"/>
+    
+    <!-- Mercedes Star -->
+    <path d="M100 30 L115 80 L170 80 L125 110 L140 160 L100 130 L60 160 L75 110 L30 80 L85 80 Z" 
+          fill="#C0C0C0" stroke="#8B0000" stroke-width="2"/>
+    
+    <!-- Background glow effect -->
+    <circle cx="100" cy="100" r="95" fill="none" stroke="#8B0000" stroke-width="2" opacity="0.3"/>
+    
+    <!-- Akwa Ibom text (optional) -->
+    <text x="100" y="180" font-family="Arial" font-size="12" fill="#C0C0C0" text-anchor="middle">Akwa Ibom Store</text>
+</svg>
