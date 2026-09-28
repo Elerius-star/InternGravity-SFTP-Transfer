@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Akwa Ibom Store</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="images/mercedes-logo.svg" alt="Mercedes-Benz Logo" onerror="this.src='https://via.placeholder.com/50x50?text=MB'">
+                <h2>Akwa Ibom Store</h2>
+            </div>
+            
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search products...">
+                <button onclick="window.location.href='shop.html?search='+document.getElementById('searchInput').value">
+                    <i class="fas fa-search"></i> Search
+                </button>
+            </div>
+            
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="shop.html">Shop</a>
+                <a href="tracking.html">Track Order</a>
+                <a href="cart.html" class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </a>
+                <a href="login.html" id="auth-link">
+                    <i class="fas fa-user"></i> Login
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1>Checkout</h1>
+        
+        <!-- Checkout Progress -->
+        <div class="checkout-progress" style="display: flex; justify-content: space-between; margin-bottom: 3rem; padding: 1rem; background: var(--card-bg); border-radius: var(--border-radius);">
+            <div style="flex: 1; text-align: center; color: var(--primary-orange);">
+                <i class="fas fa-shopping-cart"></i> Cart
+            </div>
+            <div style="flex: 1; text-align: center; color: var(--primary-orange);">
+                <i class="fas fa-credit-card"></i> Payment
+            </div>
+            <div style="flex: 1; text-align: center; color: var(--text-muted);">
+                <i class="fas fa-check-circle"></i> Confirmation
+            </div>
+        </div>
+        
+        <form id="checkout-form" class="checkout-container">
+            <!-- Shipping Information -->
+            <div class="checkout-form">
+                <div class="form-section">
+                    <h3>Shipping Information</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="full-name">Full Name *</label>
+                            <input type="text" id="full-name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" required placeholder="e.g., 08012345678">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="alt-phone">Alternative Phone</label>
+                            <input type="tel" id="alt-phone" placeholder="Optional">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="address">Delivery Address *</label>
+                        <input type="text" id="address" required placeholder="Street address, building, etc.">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="city">City/LGA *</label>
+                            <select id="city" required>
+                                <option value="">Select Local Government</option>
+                                <option value="Uyo">Uyo</option>
+                                <option value="Ikot Ekpene">Ikot Ekpene</option>
+                                <option value="Eket">Eket</option>
+                                <option value="Oron">Oron</option>
+                                <option value="Abak">Abak</option>
+                                <option value="Etinan">Etinan</option>
+                                <option value="Ikono">Ikono</option>
+                                <option value="Essien Udim">Essien Udim</option>
+                                <option value="Ikot Abasi">Ikot Abasi</option>
+                                <option value="Mkpat Enin">Mkpat Enin</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="state">State</label>
+                            <input type="text" id="state" value="Akwa Ibom" readonly>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="landmark">Nearest Landmark (Optional)</label>
+                        <input type="text" id="landmark" placeholder="e.g., Near Market, Opposite School">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="notes">Delivery Notes (Optional)</label>
+                        <textarea id="notes" rows="3" placeholder="Special instructions for delivery..."></textarea>
+                    </div>
+                </div>
+                
+                <!-- Payment Method -->
+                <div class="form-section">
+                    <h3>Payment Method</h3>
+                    
+                    <div class="payment-methods">
+                        <label class="payment-method">
+                            <input type="radio" name="payment" value="pay_on_delivery" checked>
+                            <div>
+                                <strong>Pay on Delivery</strong>
+                                <p style="font-size: 0.9rem; color: var(--text-muted);">Pay with cash when your order arrives</p>
+                            </div>
+                        </label>
+                        
+                        <label class="payment-method">
+                            <input type="radio" name="payment" value="bank_transfer">
+                            <div>
+                                <strong>Bank Transfer</strong>
+                                <p style="font-size: 0.9rem; color: var(--text-muted);">Transfer to our bank account</p>
+                            </div>
+                        </label>
+                        
+                        <label class="payment-method">
+                            <input type="radio" name="payment" value="card">
+                            <div>
+                                <strong>Card Payment</strong>
+                                <p style="font-size: 0.9rem; color: var(--text-muted);">Pay with debit/credit card</p>
+                            </div>
+                        </label>
+                        
+                        <label class="payment-method">
+                            <input type="radio" name="payment" value="ussd">
+                            <div>
+                                <strong>USSD</strong>
+                                <p style="font-size: 0.9rem; color: var(--text-muted);">Quick USSD banking</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Order Summary -->
+            <div class="cart-summary" style="position: sticky; top: 100px; height: fit-content;">
+                <h3>Order Summary</h3>
+                <div id="order-items" style="margin-bottom: 1rem;">
+                    <!-- Order items will be added dynamically -->
+                </div>
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span id="subtotal">₦0.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>Delivery Fee</span>
+                    <span id="delivery-fee">₦1,000.00</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total</span>
+                    <span id="total">₦0.00</span>
+                </div>
+                
+                <button type="submit" class="btn-checkout" id="place-order-btn">
+                    <i class="fas fa-lock"></i> Place Order
+                </button>
+                
+                <p style="font-size: 0.8rem; color: var(--text-muted); text-align: center; margin-top: 1rem;">
+                    By placing your order, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+                </p>
+            </div>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Akwa Ibom Store</h3>
+                <p>Your trusted local e-commerce platform bringing the best of Akwa Ibom State to your doorstep.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="tracking.html">Track Order</a></li>
+                    <li><a href="cart.html">Cart</a></li>
+                    <li><a href="login.html">Account</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Categories</h3>
+                <ul>
+                    <li><a href="shop.html?category=1">Fashion</a></li>
+                    <li><a href="shop.html?category=2">Electronics</a></li>
+                    <li><a href="shop.html?category=3">Home & Kitchen</a></li>
+                    <li><a href="shop.html?category=4">Beauty & Health</a></li>
+                    <li><a href="shop.html?category=5">Food & Groceries</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Uyo, Akwa Ibom State, Nigeria</p>
+                <p><i class="fas fa-phone"></i> +234 801 234 5678</p>
+                <p><i class="fas fa-envelope"></i> support@akwaibomstore.com</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2026 Akwa Ibom Store. All rights reserved. Proudly serving Akwa Ibom State, Nigeria.</p>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script>
+        // Check if user is logged in
+        if (!isLoggedIn()) {
+            window.location.href = 'login.html?redirect=checkout.html';
+        }
+        
+        // Update auth link based on login status
+        document.addEventListener('DOMContentLoaded', () => {
+            const authLink = document.getElementById('auth-link');
+            if (isLoggedIn()) {
+                const user = getCurrentUser();
+                authLink.innerHTML = `<i class="fas fa-user"></i> ${user?.full_name?.split(' ')[0] || 'Account'}`;
+                authLink.href = 'dashboard.html';
+            } else {
+                authLink.innerHTML = '<i class="fas fa-user"></i> Login';
+                authLink.href = 'login.html';
+            }
+            
+            // Initialize checkout page
+            initCheckoutPage();
+            
+            // Update order summary
+            const subtotal = cart.total || 0;
+            const deliveryFee = 1000; // Fixed delivery fee for Akwa Ibom
+            const total = subtotal + deliveryFee;
+            
+            document.getElementById('subtotal').textContent = formatCurrency(subtotal);
+            document.getElementById('delivery-fee').textContent = formatCurrency(deliveryFee);
+            document.getElementById('total').textContent = formatCurrency(total);
+            
+            // Render order items
+            const orderItemsDiv = document.getElementById('order-items');
+            if (cart.items && cart.items.length > 0) {
+                orderItemsDiv.innerHTML = cart.items.map(item => `
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                        <div>
+                            <span style="font-weight: 600;">${item.quantity}x</span> ${item.name}
+                        </div>
+                        <span>${formatCurrency(item.price * item.quantity)}</span>
+                    </div>
+                `).join('');
+            } else {
+                orderItemsDiv.innerHTML = '<p style="color: var(--text-muted);">No items in cart</p>';
+            }
+        });
+    </script>
+</body>
+</html>
