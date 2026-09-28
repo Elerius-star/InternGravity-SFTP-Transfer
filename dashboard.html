@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Dashboard</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <div class="dashboard">
+        <header>
+            <div class="logo-container">
+                <svg width="50" height="50" viewBox="0 0 100 100">
+                    <path d="M30,40 Q45,20 70,30 Q80,45 70,60 Q55,75 35,70 Q20,60 30,40" 
+                          fill="#ff6b6b" stroke="#8b0000" stroke-width="3"/>
+                </svg>
+                <h2>Employee Dashboard</h2>
+            </div>
+            <button id="logoutBtn" class="btn-logout">Logout</button>
+        </header>
+        
+        <div class="main-content">
+            <!-- Add Employee Form -->
+            <div class="card">
+                <h3>Add New Employee</h3>
+                <form id="employeeForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Employee ID:</label>
+                            <input type="text" id="empId" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Full Name:</label>
+                            <input type="text" id="empName" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Email:</label>
+                            <input type="email" id="empEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Position:</label>
+                            <input type="text" id="empPosition" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Department:</label>
+                            <input type="text" id="empDepartment" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Salary ($):</label>
+                            <input type="number" id="empSalary" min="0" step="0.01" required>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary">Add Employee</button>
+                </form>
+            </div>
+            
+            <!-- Employee List -->
+            <div class="card">
+                <h3>Employee List</h3>
+                <div class="table-container">
+                    <table id="employeeTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Employee ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Position</th>
+                                <th>Department</th>
+                                <th>Salary</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="employeeTableBody">
+                            <!-- Filled by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Edit Employee</h3>
+            <form id="editForm">
+                <input type="hidden" id="editId">
+                <div class="form-group">
+                    <label>Name:</label>
+                    <input type="text" id="editName" required>
+                </div>
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="email" id="editEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Position:</label>
+                    <input type="text" id="editPosition" required>
+                </div>
+                <div class="form-group">
+                    <label>Department:</label>
+                    <input type="text" id="editDepartment" required>
+                </div>
+                <div class="form-group">
+                    <label>Salary:</label>
+                    <input type="number" id="editSalary" min="0" step="0.01" required>
+                </div>
+                <button type="submit" class="btn-primary">Update Employee</button>
+            </form>
+        </div>
+    </div>
+    
+    <script src="scripts/app.js"></script>
+</body>
+</html>
