@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #1A1A1A;
+            color: white;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .card {
+            background: #333;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 4px solid #FF4500;
+        }
+        .success { color: #00ff00; }
+        .error { color: #ff0000; }
+        .info { color: #FFA500; }
+        img { 
+            max-width: 100%; 
+            max-height: 300px; 
+            border-radius: 8px;
+            border: 3px solid transparent;
+        }
+        img.loaded { border-color: #00ff00; }
+        img.failed { border-color: #ff0000; }
+        button {
+            background: #FF4500;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        button:hover { background: #8B0000; }
+        .file-path {
+            background: #222;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <h1>🖼️ Image Diagnostic Tool</h1>
+    
+    <div class="card">
+        <h2>Test 1: Direct Image Display</h2>
+        <img id="testImage" src="images/hero-bg.jpg" alt="Hero Image"
+             onload="this.classList.add('loaded'); document.getElementById('result1').innerHTML = '<span class=\'success\'>✅ IMAGE LOADED SUCCESSFULLY</span>'"
+             onerror="this.classList.add('failed'); document.getElementById('result1').innerHTML = '<span class=\'error\'>❌ IMAGE FAILED TO LOAD</span>'">
+        <p id="result1">Testing...</p>
+    </div>
+    
+    <div class="card">
+        <h2>Test 2: File Information</h2>
+        <p><strong>Image path in HTML:</strong> <code>images/hero-bg.jpg</code></p>
+        <p><strong>Full URL:</strong> <code id="fullUrl"></code></p>
+        <p><strong>Expected file location:</strong></p>
+        <div class="file-path">C:\Users\USER-PC\.vscode\Frontendfull3\images\hero-bg.jpg</div>
+    </div>
+    
+    <div class="card">
+        <h2>Test 3: Manual Checks</h2>
+        <button onclick="checkImage()">🔄 Check Image Again</button>
+        <button onclick="showFileInfo()">📁 Show File Info</button>
+        <button onclick="tryAlternativePaths()">🔍 Try Alternative Paths</button>
+        <p id="manualResult"></p>
+    </div>
+    
+    <div class="card">
+        <h2>Test 4: Quick Fix Options</h2>
+        <p>Choose one of these fixes:</p>
+        <button onclick="fixOption1()">Option 1: Use 'here-bg.jpg' (if that's your filename)</button>
+        <button onclick="fixOption2()">Option 2: Use './images/hero-bg.jpg'</button>
+        <button onclick="fixOption3()">Option 3: Use absolute path</button>
+        <p id="fixResult"></p>
+    </div>
+    
+    <script>
+        // Set full URL
+        document.getElementById('fullUrl').textContent = window.location.href + 'images/hero-bg.jpg';
+        
+        function checkImage() {
+            const img = new Image();
+            img.onload = function() {
+                document.getElementById('manualResult').innerHTML = '<span class="success">✅ Image exists and loads successfully!</span>';
+            };
+            img.onerror = function() {
+                document.getElementById('manualResult').innerHTML = '<span class="error">❌ Image does not exist at: images/hero-bg.jpg</span>';
+            };
+            img.src = 'images/hero-bg.jpg?' + new Date().getTime();
+        }
+        
+        function showFileInfo() {
+            alert(
+                'IMAGE DIAGNOSTIC INFO:\n\n' +
+                '1. HTML path: images/hero-bg.jpg\n' +
+                '2. Full URL: ' + window.location.href + 'images/hero-bg.jpg\n' +
+                '3. Expected disk path: C:\\Users\\USER-PC\\.vscode\\Frontendfull3\\images\\hero-bg.jpg\n\n' +
+                'Check if file exists at that location with exactly that name.'
+            );
+        }
+        
+        function tryAlternativePaths() {
+            const paths = [
+                'images/hero-bg.jpg',
+                './images/hero-bg.jpg',
+                '/images/hero-bg.jpg',
+                'hero-bg.jpg',
+                'images/here-bg.jpg'
+            ];
+            
+            let result = 'Testing paths:\n\n';
+            let found = false;
+            
+            paths.forEach(path => {
+                const img = new Image();
+                img.onload = function() {
+                    result += `✅ ${path} - WORKS!\n`;
+                    found = true;
+                };
+                img.onerror = function() {
+                    result += `❌ ${path} - FAILED\n`;
+                };
+                img.src = path + '?' + Date.now();
+            });
+            
+            setTimeout(() => {
+                alert(result + '\n' + (found ? '✅ A working path was found!' : '❌ No working path found. Check filename.'));
+            }, 1000);
+        }
+        
+        function fixOption1() {
+            document.getElementById('fixResult').innerHTML = 
+                'Try renaming your file to: <strong>hero-bg.jpg</strong><br>' +
+                'Current file might be named differently. Check in File Explorer.';
+        }
+        
+        function fixOption2() {
+            document.getElementById('fixResult').innerHTML = 
+                'Add this to your CSS:<br>' +
+                '<code style="background:#222; padding:5px; display:block;">.hero { background: linear-gradient(135deg, #800080, #8B0000), url(\'./images/hero-bg.jpg\'); }</code>';
+        }
+        
+        function fixOption3() {
+            document.getElementById('fixResult').innerHTML = 
+                'Try this in your CSS (absolute path):<br>' +
+                '<code style="background:#222; padding:5px; display:block;">.hero { background: linear-gradient(135deg, #800080, #8B0000), url(\'/images/hero-bg.jpg\'); }</code>';
+        }
+        
+        // Auto-check on load
+        window.addEventListener('load', checkImage);
+    </script>
+</body>
+</html>
