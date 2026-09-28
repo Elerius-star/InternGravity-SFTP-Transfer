@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="200" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <!-- Dragon Body -->
+    <path d="M25,45 Q40,15 75,25 Q85,45 70,60 Q50,80 30,70 Q15,60 25,45" 
+          fill="#8b0000" stroke="#ffd700" stroke-width="3"/>
+    
+    <!-- Dragon Wings -->
+    <path d="M40,35 Q25,20 15,30 Q20,40 30,35" fill="#660000" opacity="0.8"/>
+    <path d="M60,35 Q75,20 85,30 Q80,40 70,35" fill="#660000" opacity="0.8"/>
+    
+    <!-- Dragon Head -->
+    <circle cx="35" cy="40" r="8" fill="#8b0000"/>
+    <circle cx="45" cy="40" r="8" fill="#8b0000"/>
+    
+    <!-- Eyes -->
+    <circle cx="38" cy="37" r="2" fill="white"/>
+    <circle cx="42" cy="37" r="2" fill="white"/>
+    <circle cx="38.5" cy="37.5" r="1" fill="black"/>
+    <circle cx="42.5" cy="37.5" r="1" fill="black"/>
+    
+    <!-- Fire -->
+    <path d="M30,45 Q25,50 15,45 Q20,55 25,50" fill="#ffd700" opacity="0.6"/>
+    
+    <!-- Scales (decorative dots) -->
+    <circle cx="50" cy="50" r="2" fill="#ffd700" opacity="0.3"/>
+    <circle cx="55" cy="55" r="2" fill="#ffd700" opacity="0.3"/>
+    <circle cx="45" cy="60" r="2" fill="#ffd700" opacity="0.3"/>
+</svg>
