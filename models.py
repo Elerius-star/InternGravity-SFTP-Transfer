@@ -1,206 +1,126 @@
-"""
-Database models and connection functions for Employee Management System
-"""
-
-import sqlite3
-import os
+from flask_sqlalchemy import SQLAlchemy
+from flask_bcrypt import Bcrypt
 from datetime import datetime
 
-def get_db_connection():
-    """Create a database connection"""
-    # Get the absolute path to the database file
-    db_path = os.path.join(os.path.dirname(__file__), 'database.db')
+db = SQLAlchemy()
+bcrypt = Bcrypt()
+
+class User(db.Model):
+    __tablename__ = 'users'
     
-    try:
-        # Create connection with row factory to get dictionary-like rows
-        conn = sqlite3.connect(db_path)
-        conn.row_factory = sqlite3.Row
-        return conn
-    except sqlite3.Error as e:
-        print(f"❌ Database connection error: {e}")
-        raise
-
-def init_database():
-    """Initialize the database with required tables"""
-    conn = None
-    try:
-        conn = get_db_connection()
-        
-        # Create employees table
-        conn.execute('''
-            CREATE TABLE IF NOT EXISTS employees (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                employee_id TEXT UNIQUE NOT NULL,
-                name TEXT NOT NULL,
-                email TEXT UNIQUE NOT NULL,
-                position TEXT NOT NULL,
-                department TEXT NOT NULL,
-                salary REAL NOT NULL,
-                date_joined TEXT NOT NULL,
-                created_at TEXT DEFAULT CURRENT_TIMESTAMP
-            )
-        ''')
-        conn.commit()
-        
-        print("✅ Database initialized successfully")
-        return True
-        
-    except sqlite3.Error as e:
-        print(f"❌ Database initialization error: {e}")
-        return False
-    finally:
-        if conn:
-            conn.close()
-
-def verify_database():
-    """Verify database connection and tables"""
-    try:
-        conn = get_db_connection()
-        # Check if employees table exists
-        result = conn.execute(
-            "SELECT name FROM sqlite_master WHERE type='table' AND name='employees'"
-        ).fetchone()
-        
-        if result:
-            # Count employees
-            count = conn.execute('SELECT COUNT(*) as count FROM employees').fetchone()
-            print(f"✅ Database connected: {count['count']} employees found")
-            return True
-        else:
-            print("❌ Employees table not found")
-            return False
-    except sqlite3.Error as e:
-        print(f"❌ Database verification failed: {e}")
-        return False
-    finally:
-        if conn:
-            conn.close()
-
-def get_employee_by_id(employee_id):
-    """Get a single employee by ID"""
-    conn = None
-    try:
-        conn = get_db_connection()
-        employee = conn.execute('SELECT * FROM employees WHERE id = ?', (employee_id,)).fetchone()
-        return employee
-    except sqlite3.Error as e:
-        print(f"❌ Error fetching employee: {e}")
-        return None
-    finally:
-        if conn:
-            conn.close()
-
-def get_all_employees():
-    """Get all employees"""
-    conn = None
-    try:
-        conn = get_db_connection()
-        employees = conn.execute('SELECT * FROM employees ORDER BY id DESC').fetchall()
-        return employees
-    except sqlite3.Error as e:
-        print(f"❌ Error fetching employees: {e}")
-        return []
-    finally:
-        if conn:
-            conn.close()
-
-def create_employee(employee_data):
-    """Create a new employee"""
-    conn = None
-    try:
-        conn = get_db_connection()
-        conn.execute('''
-            INSERT INTO employees (employee_id, name, email, position, department, salary, date_joined)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
-        ''', (
-            employee_data['employee_id'],
-            employee_data['name'],
-            employee_data['email'],
-            employee_data['position'],
-            employee_data['department'],
-            employee_data['salary'],
-            datetime.now().strftime('%Y-%m-%d')
-        ))
-        conn.commit()
-        return True, "Employee created successfully"
-    except sqlite3.IntegrityError as e:
-        if 'UNIQUE constraint failed' in str(e):
-            return False, "Employee ID or Email already exists"
-        return False, f"Database error: {e}"
-    except Exception as e:
-        return False, f"Error: {e}"
-    finally:
-        if conn:
-            conn.close()
-
-def update_employee(employee_id, update_data):
-    """Update an existing employee"""
-    conn = None
-    try:
-        conn = get_db_connection()
-        
-        # Build update query dynamically
-        update_fields = []
-        values = []
-        
-        updatable_fields = ['name', 'email', 'position', 'department', 'salary']
-        for field in updatable_fields:
-            if field in update_data and update_data[field] is not None:
-                values.append(update_data[field])
-                update_fields.append(f"{field} = ?")
-        
-        if update_fields:
-            query = f"UPDATE employees SET {', '.join(update_fields)} WHERE id = ?"
-            values.append(employee_id)
-            conn.execute(query, values)
-            conn.commit()
-            return True, "Employee updated successfully"
-        return True, "No fields to update"
-    except Exception as e:
-        return False, str(e)
-    finally:
-        if conn:
-            conn.close()
-
-def delete_employee(employee_id):
-    """Delete an employee"""
-    conn = None
-    try:
-        conn = get_db_connection()
-        conn.execute('DELETE FROM employees WHERE id = ?', (employee_id,))
-        conn.commit()
-        return True, "Employee deleted successfully"
-    except Exception as e:
-        return False, str(e)
-    finally:
-        if conn:
-            conn.close()
-
-# If this file is run directly, test the functions
-if __name__ == '__main__':
-    print("\n" + "="*50)
-    print("🐉 TESTING MODELS.PY")
-    print("="*50)
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password_hash = db.Column(db.String(200), nullable=False)
+    full_name = db.Column(db.String(100))
+    phone = db.Column(db.String(20))
+    address = db.Column(db.Text)
+    city = db.Column(db.String(50))
+    state = db.Column(db.String(50), default='Akwa Ibom')
+    is_admin = db.Column(db.Boolean, default=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
-    # Test database initialization
-    print("\n📦 Testing init_database():")
-    if init_database():
-        print("  ✅ init_database() works")
-    else:
-        print("  ❌ init_database() failed")
+    orders = db.relationship('Order', backref='user', lazy=True)
+    reviews = db.relationship('Review', backref='user', lazy=True)
     
-    # Test database verification
-    print("\n🔍 Testing verify_database():")
-    if verify_database():
-        print("  ✅ verify_database() works")
-    else:
-        print("  ❌ verify_database() failed")
+    def set_password(self, password):
+        self.password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
     
-    # Test get_all_employees
-    print("\n📋 Testing get_all_employees():")
-    employees = get_all_employees()
-    print(f"  ✅ Retrieved {len(employees)} employees")
+    def check_password(self, password):
+        return bcrypt.check_password_hash(self.password_hash, password)
+
+class Category(db.Model):
+    __tablename__ = 'categories'
     
-    print("\n" + "="*50)
-    print("✅ All tests complete")
-    print("="*50 + "\n")
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), unique=True, nullable=False)
+    description = db.Column(db.Text)
+    image_url = db.Column(db.String(200))
+    
+    products = db.relationship('Product', backref='category', lazy=True)
+
+class Product(db.Model):
+    __tablename__ = 'products'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    price = db.Column(db.Float, nullable=False)
+    discounted_price = db.Column(db.Float)
+    stock = db.Column(db.Integer, default=0)
+    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
+    brand = db.Column(db.String(50))
+    sku = db.Column(db.String(50), unique=True)
+    image_url = db.Column(db.String(200))
+    additional_images = db.Column(db.Text)  # JSON string of image URLs
+    features = db.Column(db.Text)  # JSON string of features
+    specifications = db.Column(db.Text)  # JSON string of specs
+    is_featured = db.Column(db.Boolean, default=False)
+    is_new = db.Column(db.Boolean, default=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    order_items = db.relationship('OrderItem', backref='product', lazy=True)
+    reviews = db.relationship('Review', backref='product', lazy=True)
+
+class Review(db.Model):
+    __tablename__ = 'reviews'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    product_id = db.Column(db.Integer, db.ForeignKey('products.id'), nullable=False)
+    rating = db.Column(db.Integer, nullable=False)  # 1-5
+    comment = db.Column(db.Text)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    __table_args__ = (db.UniqueConstraint('user_id', 'product_id', name='unique_user_product_review'),)
+
+class Cart(db.Model):
+    __tablename__ = 'carts'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False, unique=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    items = db.relationship('CartItem', backref='cart', lazy=True, cascade='all, delete-orphan')
+
+class CartItem(db.Model):
+    __tablename__ = 'cart_items'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    cart_id = db.Column(db.Integer, db.ForeignKey('carts.id'), nullable=False)
+    product_id = db.Column(db.Integer, db.ForeignKey('products.id'), nullable=False)
+    quantity = db.Column(db.Integer, nullable=False, default=1)
+    added_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+class Order(db.Model):
+    __tablename__ = 'orders'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    order_number = db.Column(db.String(20), unique=True, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    order_date = db.Column(db.DateTime, default=datetime.utcnow)
+    total_amount = db.Column(db.Float, nullable=False)
+    status = db.Column(db.String(20), default='pending')  # pending, processing, shipped, delivered, cancelled
+    payment_method = db.Column(db.String(50))
+    payment_status = db.Column(db.String(20), default='pending')
+    shipping_address = db.Column(db.Text, nullable=False)
+    shipping_city = db.Column(db.String(50))
+    shipping_state = db.Column(db.String(50), default='Akwa Ibom')
+    shipping_phone = db.Column(db.String(20))
+    tracking_number = db.Column(db.String(50))
+    estimated_delivery = db.Column(db.DateTime)
+    notes = db.Column(db.Text)
+    
+    items = db.relationship('OrderItem', backref='order', lazy=True)
+
+class OrderItem(db.Model):
+    __tablename__ = 'order_items'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    order_id = db.Column(db.Integer, db.ForeignKey('orders.id'), nullable=False)
+    product_id = db.Column(db.Integer, db.ForeignKey('products.id'), nullable=False)
+    product_name = db.Column(db.String(100), nullable=False)
+    quantity = db.Column(db.Integer, nullable=False)
+    price = db.Column(db.Float, nullable=False)  # Price at time of order
+    subtotal = db.Column(db.Float, nullable=False)
