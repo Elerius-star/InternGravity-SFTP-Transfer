@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details - Akwa Ibom Store</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="images/mercedes-logo.svg" alt="Mercedes-Benz Logo" onerror="this.src='https://via.placeholder.com/50x50?text=MB'">
+                <h2>Akwa Ibom Store</h2>
+            </div>
+            
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search products...">
+                <button onclick="window.location.href='shop.html?search='+document.getElementById('searchInput').value">
+                    <i class="fas fa-search"></i> Search
+                </button>
+            </div>
+            
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="shop.html">Shop</a>
+                <a href="tracking.html">Track Order</a>
+                <a href="cart.html" class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </a>
+                <a href="login.html" id="auth-link">
+                    <i class="fas fa-user"></i> Login
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a href="index.html">Home</a> &gt;
+            <a href="shop.html">Shop</a> &gt;
+            <span id="product-category"></span>
+        </div>
+
+        <!-- Product Detail -->
+        <div class="product-detail">
+            <!-- Product Gallery -->
+            <div class="product-gallery">
+                <img id="main-image" src="" alt="Product Image" class="main-image">
+                <div id="thumbnail-gallery" class="thumbnail-grid">
+                    <!-- Thumbnails will be added dynamically -->
+                </div>
+            </div>
+            
+            <!-- Product Info -->
+            <div class="product-info-detail">
+                <h1 id="product-name">Loading...</h1>
+                
+                <div class="product-meta">
+                    <span id="product-sku"></span>
+                    <span id="product-availability"></span>
+                </div>
+                
+                <div class="product-price-detail" id="product-price">
+                    <!-- Price will be added dynamically -->
+                </div>
+                
+                <div id="stock-status" class="stock-status">Checking stock...</div>
+                
+                <div class="product-description" id="product-description">
+                    <!-- Description will be added dynamically -->
+                </div>
+                
+                <div class="product-features" id="product-features">
+                    <!-- Features will be added dynamically -->
+                </div>
+                
+                <div class="quantity-selector">
+                    <label>Quantity:</label>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn minus" onclick="updateQuantity(-1)">-</button>
+                        <input type="number" id="quantity" class="quantity-input" value="1" min="1" max="99">
+                        <button class="quantity-btn plus" onclick="updateQuantity(1)">+</button>
+                    </div>
+                </div>
+                
+                <div class="product-actions-detail">
+                    <button id="add-to-cart" class="btn-add-to-cart">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                    <button id="add-to-wishlist" class="btn-wishlist">
+                        <i class="fas fa-heart"></i> Wishlist
+                    </button>
+                </div>
+                
+                <!-- Delivery Info for Akwa Ibom -->
+                <div class="delivery-info" style="margin-top: 2rem; padding: 1rem; background: var(--darker-bg); border-radius: var(--border-radius);">
+                    <h4><i class="fas fa-truck"></i> Delivery in Akwa Ibom</h4>
+                    <p>✓ Free delivery in Uyo metropolis</p>
+                    <p>✓ Delivery within 1-3 business days to all Akwa Ibom LGAs</p>
+                    <p>✓ Pay on delivery available</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reviews Section -->
+        <div class="reviews-section">
+            <div class="reviews-header">
+                <h2>Customer Reviews</h2>
+                <div class="reviews-summary">
+                    <span class="average-rating" id="average-rating">0.0</span>
+                    <div>
+                        <div class="product-rating" id="rating-stars"></div>
+                        <span id="total-reviews">0 reviews</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Review Form (visible when logged in) -->
+            <div id="review-form-container" class="review-form" style="display: none;">
+                <h3>Write a Review</h3>
+                <div class="rating-select" id="rating-select">
+                    <i class="far fa-star" data-rating="1"></i>
+                    <i class="far fa-star" data-rating="2"></i>
+                    <i class="far fa-star" data-rating="3"></i>
+                    <i class="far fa-star" data-rating="4"></i>
+                    <i class="far fa-star" data-rating="5"></i>
+                </div>
+                <textarea id="review-comment" placeholder="Share your experience with this product..." rows="4"></textarea>
+                <button id="submit-review" class="btn-primary">Submit Review</button>
+            </div>
+            
+            <!-- Reviews List -->
+            <div id="reviews-list" class="reviews-list">
+                <!-- Reviews will be added dynamically -->
+            </div>
+        </div>
+
+        <!-- Related Products -->
+        <div class="related-products">
+            <h2>You May Also Like</h2>
+            <div id="related-products" class="products-grid">
+                <!-- Related products will be added dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Akwa Ibom Store</h3>
+                <p>Your trusted local e-commerce platform bringing the best of Akwa Ibom State to your doorstep.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="tracking.html">Track Order</a></li>
+                    <li><a href="cart.html">Cart</a></li>
+                    <li><a href="login.html">Account</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Categories</h3>
+                <ul>
+                    <li><a href="shop.html?category=1">Fashion</a></li>
+                    <li><a href="shop.html?category=2">Electronics</a></li>
+                    <li><a href="shop.html?category=3">Home & Kitchen</a></li>
+                    <li><a href="shop.html?category=4">Beauty & Health</a></li>
+                    <li><a href="shop.html?category=5">Food & Groceries</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Uyo, Akwa Ibom State, Nigeria</p>
+                <p><i class="fas fa-phone"></i> +234 801 234 5678</p>
+                <p><i class="fas fa-envelope"></i> support@akwaibomstore.com</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2026 Akwa Ibom Store. All rights reserved. Proudly serving Akwa Ibom State, Nigeria.</p>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script>
+        // Get product ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('id');
+        
+        if (!productId) {
+            window.location.href = 'shop.html';
+        }
+        
+        function updateQuantity(change) {
+            const input = document.getElementById('quantity');
+            let value = parseInt(input.value) + change;
+            if (value < 1) value = 1;
+            if (value > 99) value = 99;
+            input.value = value;
+        }
+        
+        // Update auth link based on login status
+        document.addEventListener('DOMContentLoaded', () => {
+            const authLink = document.getElementById('auth-link');
+            if (isLoggedIn()) {
+                const user = getCurrentUser();
+                authLink.innerHTML = `<i class="fas fa-user"></i> ${user?.full_name?.split(' ')[0] || 'Account'}`;
+                authLink.href = 'dashboard.html';
+                document.getElementById('review-form-container').style.display = 'block';
+            } else {
+                authLink.innerHTML = '<i class="fas fa-user"></i> Login';
+                authLink.href = 'login.html';
+            }
+            
+            // Initialize product page
+            initProductPage();
+        });
+    </script>
+</body>
+</html>
