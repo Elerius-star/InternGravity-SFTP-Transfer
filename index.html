@@ -3,43 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Management System - Login</title>
-    <link rel="stylesheet" href="styles/main.css">
+    <title>Akwa Ibom Store - Local E-commerce Platform</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <div class="login-container">
-        <div class="dragon-logo">
-            <!-- SVG Dragon Logo - Simplified version -->
-            <svg width="120" height="120" viewBox="0 0 100 100">
-                <path d="M30,40 Q45,20 70,30 Q80,45 70,60 Q55,75 35,70 Q20,60 30,40" 
-                      fill="#ff6b6b" stroke="#8b0000" stroke-width="3"/>
-                <circle cx="45" cy="45" r="5" fill="white"/>
-                <circle cx="55" cy="45" r="5" fill="white"/>
-                <circle cx="47" cy="47" r="2" fill="black"/>
-                <circle cx="57" cy="47" r="2" fill="black"/>
-                <path d="M40,55 Q50,65 60,55" stroke="white" stroke-width="3" fill="none"/>
-            </svg>
+    <!-- Hero Image Test Script - Integrated -->
+    <script>
+        // Test if hero image loads and apply fallback if needed
+        window.addEventListener('load', function() {
+            const heroSection = document.querySelector('.hero');
+            if (!heroSection) return;
+            
+            const img = new Image();
+            img.src = 'images/hero-bg.jpg';
+            
+            img.onload = function() {
+                console.log('✅ Hero image loaded successfully from: images/hero-bg.jpg');
+                // Remove fallback class if it was added
+                heroSection.classList.remove('image-failed');
+            };
+            
+            img.onerror = function() {
+                console.warn('⚠️ Hero image failed to load from: images/hero-bg.jpg');
+                console.warn('📁 Expected path: C:\\Users\\USER-PC\\.vscode\\Frontendfull3\\images\\hero-bg.jpg');
+                
+                // Add fallback class to show gradient only
+                heroSection.classList.add('image-failed');
+                
+                // Show brief notification (will disappear)
+                const notice = document.createElement('div');
+                notice.style.cssText = 'background: #FF4500; color: white; padding: 8px; text-align: center; position: fixed; top: 0; left: 0; right: 0; z-index: 9999; font-size: 14px;';
+                notice.innerHTML = '🖼️ Hero image loading... using gradient background';
+                document.body.prepend(notice);
+                setTimeout(() => notice.remove(), 3000);
+            };
+        });
+    </script>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="images/mercedes-logo.svg" alt="Mercedes-Benz Logo" onerror="this.src='https://via.placeholder.com/50x50?text=MB'">
+                <h2>Akwa Ibom Store</h2>
+            </div>
+            
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search products...">
+                <button onclick="window.location.href='shop.html?search='+document.getElementById('searchInput').value">
+                    <i class="fas fa-search"></i> Search
+                </button>
+            </div>
+            
+            <div class="nav-links">
+                <a href="index.html" class="active">Home</a>
+                <a href="shop.html">Shop</a>
+                <a href="tracking.html">Track Order</a>
+                <a href="cart.html" class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </a>
+                <a href="login.html" id="auth-link">
+                    <i class="fas fa-user"></i> Login
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Welcome to Akwa Ibom's Premier Online Store</h1>
+            <p>Discover authentic local products delivered right to your doorstep. From traditional crafts to modern electronics, we bring the best of Akwa Ibom to you.</p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" onclick="window.location.href='shop.html'">Start Shopping</button>
+                <button class="btn btn-outline" onclick="window.location.href='#featured'">Explore Products</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <div class="container">
+        <h2 class="section-title">Shop by Category</h2>
+        <div id="categories-grid" class="categories-grid">
+            <!-- Categories loaded dynamically -->
+        </div>
+    </div>
+
+    <!-- Featured Products -->
+    <div class="container" id="featured">
+        <h2 class="section-title">Featured Products</h2>
+        <div id="featured-products" class="products-grid">
+            <!-- Products loaded dynamically -->
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Akwa Ibom Store</h3>
+                <p>Your trusted local e-commerce platform bringing the best of Akwa Ibom State to your doorstep.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="tracking.html">Track Order</a></li>
+                    <li><a href="cart.html">Cart</a></li>
+                    <li><a href="login.html">Account</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Categories</h3>
+                <ul>
+                    <li><a href="shop.html?category=1">Fashion</a></li>
+                    <li><a href="shop.html?category=2">Electronics</a></li>
+                    <li><a href="shop.html?category=3">Home & Kitchen</a></li>
+                    <li><a href="shop.html?category=4">Beauty & Health</a></li>
+                    <li><a href="shop.html?category=5">Food & Groceries</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Uyo, Akwa Ibom State, Nigeria</p>
+                <p><i class="fas fa-phone"></i> +234 801 234 5678</p>
+                <p><i class="fas fa-envelope"></i> support@akwaibomstore.com</p>
+            </div>
         </div>
         
-        <h1>🐉 Employee Management System</h1>
-        
-        <form id="loginForm">
-            <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            
-            <button type="submit" class="btn-login">Login</button>
-        </form>
-        
-        <div id="errorMessage" class="error-message"></div>
-    </div>
-    
-    <script src="scripts/app.js"></script>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Akwa Ibom Store. All rights reserved. Proudly serving Akwa Ibom State, Nigeria.</p>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script>
+        // Update auth link based on login status
+        document.addEventListener('DOMContentLoaded', () => {
+            const authLink = document.getElementById('auth-link');
+            if (isLoggedIn()) {
+                const user = getCurrentUser();
+                authLink.innerHTML = `<i class="fas fa-user"></i> ${user?.full_name?.split(' ')[0] || 'Account'}`;
+                authLink.href = 'dashboard.html';
+            } else {
+                authLink.innerHTML = '<i class="fas fa-user"></i> Login';
+                authLink.href = 'login.html';
+            }
+        });
+    </script>
 </body>
 </html>
