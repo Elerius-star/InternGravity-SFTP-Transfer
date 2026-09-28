@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management System - Login</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="dragon-logo">
+            <!-- SVG Dragon Logo - Simplified version -->
+            <svg width="120" height="120" viewBox="0 0 100 100">
+                <path d="M30,40 Q45,20 70,30 Q80,45 70,60 Q55,75 35,70 Q20,60 30,40" 
+                      fill="#ff6b6b" stroke="#8b0000" stroke-width="3"/>
+                <circle cx="45" cy="45" r="5" fill="white"/>
+                <circle cx="55" cy="45" r="5" fill="white"/>
+                <circle cx="47" cy="47" r="2" fill="black"/>
+                <circle cx="57" cy="47" r="2" fill="black"/>
+                <path d="M40,55 Q50,65 60,55" stroke="white" stroke-width="3" fill="none"/>
+            </svg>
+        </div>
+        
+        <h1>🐉 Employee Management System</h1>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            
+            <button type="submit" class="btn-login">Login</button>
+        </form>
+        
+        <div id="errorMessage" class="error-message"></div>
+    </div>
+    
+    <script src="scripts/app.js"></script>
+</body>
+</html>
