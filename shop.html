@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - Akwa Ibom Store</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="images/mercedes-logo.svg" alt="Mercedes-Benz Logo" onerror="this.src='https://via.placeholder.com/50x50?text=MB'">
+                <h2>Akwa Ibom Store</h2>
+            </div>
+            
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search products...">
+                <button onclick="window.location.href='shop.html?search='+document.getElementById('searchInput').value">
+                    <i class="fas fa-search"></i> Search
+                </button>
+            </div>
+            
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="shop.html" class="active">Shop</a>
+                <a href="tracking.html">Track Order</a>
+                <a href="cart.html" class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </a>
+                <a href="login.html" id="auth-link">
+                    <i class="fas fa-user"></i> Login
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Page Title -->
+        <h1>Shop Our Products</h1>
+        
+        <!-- Filters -->
+        <div class="products-header">
+            <div class="filters">
+                <select id="category-filter" class="filter-select">
+                    <option value="">All Categories</option>
+                </select>
+                
+                <select id="sort-filter" class="filter-select">
+                    <option value="newest">Newest First</option>
+                    <option value="price_asc">Price: Low to High</option>
+                    <option value="price_desc">Price: High to Low</option>
+                    <option value="name_asc">Name: A to Z</option>
+                </select>
+                
+                <div class="price-range">
+                    <input type="number" id="min-price" placeholder="Min ₦" min="0">
+                    <span>-</span>
+                    <input type="number" id="max-price" placeholder="Max ₦" min="0">
+                    <button id="apply-filters" class="btn-primary">Apply</button>
+                </div>
+            </div>
+            
+            <div class="results-count">
+                <span id="results-count">Loading products...</span>
+            </div>
+        </div>
+        
+        <!-- Products Grid -->
+        <div id="products-grid" class="products-grid">
+            <!-- Products loaded dynamically -->
+        </div>
+        
+        <!-- Pagination -->
+        <div id="pagination"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Akwa Ibom Store</h3>
+                <p>Your trusted local e-commerce platform bringing the best of Akwa Ibom State to your doorstep.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="tracking.html">Track Order</a></li>
+                    <li><a href="cart.html">Cart</a></li>
+                    <li><a href="login.html">Account</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Categories</h3>
+                <ul>
+                    <li><a href="shop.html?category=1">Fashion</a></li>
+                    <li><a href="shop.html?category=2">Electronics</a></li>
+                    <li><a href="shop.html?category=3">Home & Kitchen</a></li>
+                    <li><a href="shop.html?category=4">Beauty & Health</a></li>
+                    <li><a href="shop.html?category=5">Food & Groceries</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Uyo, Akwa Ibom State, Nigeria</p>
+                <p><i class="fas fa-phone"></i> +234 801 234 5678</p>
+                <p><i class="fas fa-envelope"></i> support@akwaibomstore.com</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2026 Akwa Ibom Store. All rights reserved. Proudly serving Akwa Ibom State, Nigeria.</p>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script>
+        // Update auth link based on login status
+        document.addEventListener('DOMContentLoaded', () => {
+            const authLink = document.getElementById('auth-link');
+            if (isLoggedIn()) {
+                const user = getCurrentUser();
+                authLink.innerHTML = `<i class="fas fa-user"></i> ${user?.full_name?.split(' ')[0] || 'Account'}`;
+                authLink.href = 'dashboard.html';
+            } else {
+                authLink.innerHTML = '<i class="fas fa-user"></i> Login';
+                authLink.href = 'login.html';
+            }
+        });
+    </script>
+</body>
+</html>
