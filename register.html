@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Akwa Ibom Store</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="images/mercedes-logo.svg" alt="Mercedes-Benz Logo" onerror="this.src='https://via.placeholder.com/50x50?text=MB'">
+                <h2>Akwa Ibom Store</h2>
+            </div>
+            
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search products...">
+                <button onclick="window.location.href='shop.html?search='+document.getElementById('searchInput').value">
+                    <i class="fas fa-search"></i> Search
+                </button>
+            </div>
+            
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="shop.html">Shop</a>
+                <a href="tracking.html">Track Order</a>
+                <a href="cart.html" class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </a>
+                <a href="login.html">
+                    <i class="fas fa-user"></i> Login
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="auth-container">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <img src="images/mercedes-logo.svg" alt="Mercedes-Benz Logo" onerror="this.src='https://via.placeholder.com/80x80?text=MB'">
+                    <h2>Create Account</h2>
+                    <p>Join Akwa Ibom Store today</p>
+                </div>
+                
+                <!-- Registration Form -->
+                <form id="register-form" onsubmit="event.preventDefault(); register({
+                    username: document.getElementById('username').value,
+                    email: document.getElementById('email').value,
+                    password: document.getElementById('password').value,
+                    full_name: document.getElementById('fullname').value,
+                    phone: document.getElementById('phone').value,
+                    address: document.getElementById('address').value,
+                    city: document.getElementById('city').value,
+                    state: 'Akwa Ibom'
+                })">
+                    <div class="form-group">
+                        <label for="fullname">Full Name *</label>
+                        <input type="text" id="fullname" required placeholder="Enter your full name">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="username">Username *</label>
+                            <input type="text" id="username" required placeholder="Choose a username">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" required placeholder="your@email.com">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" required placeholder="08012345678">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="password">Password *</label>
+                            <input type="password" id="password" required placeholder="Minimum 6 characters" minlength="6">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="address">Delivery Address *</label>
+                        <input type="text" id="address" required placeholder="Street address, building, etc.">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="city">City/LGA *</label>
+                            <select id="city" required>
+                                <option value="">Select Local Government</option>
+                                <option value="Uyo">Uyo</option>
+                                <option value="Ikot Ekpene">Ikot Ekpene</option>
+                                <option value="Eket">Eket</option>
+                                <option value="Oron">Oron</option>
+                                <option value="Abak">Abak</option>
+                                <option value="Etinan">Etinan</option>
+                                <option value="Ikono">Ikono</option>
+                                <option value="Essien Udim">Essien Udim</option>
+                                <option value="Ikot Abasi">Ikot Abasi</option>
+                                <option value="Mkpat Enin">Mkpat Enin</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="state">State</label>
+                            <input type="text" id="state" value="Akwa Ibom" readonly>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" required> 
+                            I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="auth-submit">Create Account</button>
+                </form>
+                
+                <p style="text-align: center; margin-top: 1.5rem; color: var(--text-muted);">
+                    Already have an account? <a href="login.html">Login here</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Akwa Ibom Store</h3>
+                <p>Your trusted local e-commerce platform bringing the best of Akwa Ibom State to your doorstep.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="tracking.html">Track Order</a></li>
+                    <li><a href="cart.html">Cart</a></li>
+                    <li><a href="login.html">Account</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Uyo, Akwa Ibom State, Nigeria</p>
+                <p><i class="fas fa-phone"></i> +234 801 234 5678</p>
+                <p><i class="fas fa-envelope"></i> support@akwaibomstore.com</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2026 Akwa Ibom Store. All rights reserved. Proudly serving Akwa Ibom State, Nigeria.</p>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
